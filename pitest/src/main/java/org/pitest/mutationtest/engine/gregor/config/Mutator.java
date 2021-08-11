@@ -288,6 +288,10 @@ public final class Mutator {
     return fromStrings(MUTATORS.keySet());
   }
 
+  public static Collection<String> allMutatorIds() {
+    return MUTATORS.keySet();
+  }
+
   private static Collection<MethodMutatorFactory> stronger() {
     return combine(
         newDefaults(),
