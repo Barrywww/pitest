@@ -49,11 +49,7 @@ import org.pitest.mutationtest.engine.gregor.mutators.RemoveConditionalMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.RemoveConditionalMutator.Choice;
 import org.pitest.mutationtest.engine.gregor.mutators.ReturnValsMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.experimental.BigIntegerMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.experimental.NakedReceiverMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.experimental.RemoveIncrementsMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.experimental.RemoveSwitchMutator;
-import org.pitest.mutationtest.engine.gregor.mutators.experimental.SwitchMutator;
+import org.pitest.mutationtest.engine.gregor.mutators.experimental.*;
 import org.pitest.mutationtest.engine.gregor.mutators.rv.ABSMutator;
 import org.pitest.mutationtest.engine.gregor.mutators.rv.AOD1Mutator;
 import org.pitest.mutationtest.engine.gregor.mutators.rv.AOD2Mutator;
@@ -163,6 +159,11 @@ public final class Mutator {
     add("REMOVE_CONDITIONALS_ORD_ELSE", new RemoveConditionalMutator(
         Choice.ORDER, false));
     addGroup("REMOVE_CONDITIONALS", RemoveConditionalMutator.makeMutators());
+
+    /*
+     * Expanded Mutators for CSTP.
+     */
+    add("REMOVE_CSTP_PATTERN", PatternMatchMutator.PATTERN_MATCH_MUTATOR);
 
     add("TRUE_RETURNS", BooleanTrueReturnValsMutator.BOOLEAN_TRUE_RETURN);
     add("FALSE_RETURNS", BooleanFalseReturnValsMutator.BOOLEAN_FALSE_RETURN);
