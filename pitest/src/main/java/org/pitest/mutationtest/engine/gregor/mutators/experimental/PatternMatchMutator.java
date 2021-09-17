@@ -52,13 +52,13 @@ class PatternMatchMethodVisitor extends MethodVisitor {
     @Override
     public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
         if (opcode == Opcodes.INVOKEVIRTUAL){
-            System.out.println("Name: " + name);
-            System.out.println("Owner: " + owner);
+//            System.out.println("Name: " + name);
+//            System.out.println("Owner: " + owner);
         }
 
         if(opcode == Opcodes.INVOKEVIRTUAL && owner.contains("DealLog")) {
-            System.out.println("------------START------------");
-            System.out.println("INVOKE DealLog Methods CALLED");
+//            System.out.println("------------START------------");
+//            System.out.println("INVOKE DealLog Methods CALLED");
             if(SEEN_INVOKE_VIRTUAL == 0){
                 SEEN_INVOKE_VIRTUAL = 1;
             }
@@ -69,8 +69,8 @@ class PatternMatchMethodVisitor extends MethodVisitor {
             }
         }
         else if (opcode == Opcodes.INVOKEVIRTUAL && owner.equals("java/lang/String") && name.equals("equals")){
-            System.out.println("------------START------------");
-            System.out.println("Java String Equal Methods CALLED");
+//            System.out.println("------------START------------");
+//            System.out.println("Java String Equal Methods CALLED");
             if(SEEN_INVOKE_VIRTUAL == 1 && SEEN_LDC == 1){
                 SEEN_EQUALS = 1;
             }
@@ -81,33 +81,33 @@ class PatternMatchMethodVisitor extends MethodVisitor {
             }
         }
         else{
-            System.out.println("------------START------------");
-            System.out.println("STATE RESET AT: INVOKE VIRTUAL");
+//            System.out.println("------------START------------");
+//            System.out.println("STATE RESET AT: INVOKE VIRTUAL");
             SEEN_INVOKE_VIRTUAL = 0;
             SEEN_LDC = 0;
             SEEN_EQUALS = 0;
         }
-        logInternalState();
-        System.out.println("-------------END-------------");
+//        logInternalState();
+//        System.out.println("-------------END-------------");
         super.visitMethodInsn(opcode, owner, name, desc, itf);
     }
 
     @Override
     public void visitLdcInsn(Object value){
         if (SEEN_INVOKE_VIRTUAL == 1){
-            System.out.println("------------START------------");
-            System.out.println("SEEN LDC AFTER INVOKE VIRTUAL");
+//            System.out.println("------------START------------");
+//            System.out.println("SEEN LDC AFTER INVOKE VIRTUAL");
             SEEN_LDC = 1;
         }
         else{
-            System.out.println("------------START------------");
-            System.out.println("STATE RESET AT: LDC");
+//            System.out.println("------------START------------");
+//            System.out.println("STATE RESET AT: LDC");
             SEEN_INVOKE_VIRTUAL = 0;
             SEEN_LDC = 0;
             SEEN_EQUALS = 0;
         }
-        logInternalState();
-        System.out.println("-------------END-------------");
+//        logInternalState();
+//        System.out.println("-------------END-------------");
         super.visitLdcInsn(value);
     }
 
@@ -116,25 +116,24 @@ class PatternMatchMethodVisitor extends MethodVisitor {
 
         if (canMutate(opcode)
                 && SEEN_INVOKE_VIRTUAL == 1
-                && SEEN_LDC == 1
-                && SEEN_EQUALS == 1
         ) {
             final MutationIdentifier newId = this.context.registerMutation(this.factory, "CSTP Pattern-Match Mutator");
 
             // should mutate?
-            System.out.println("!!!!!!!!!!!!START!!!!!!!!!!!!");
-            System.out.println("MUTATED AT: JUMP INSN");
+//            System.out.println("!!!!!!!!!!!!START!!!!!!!!!!!!");
+//            System.out.println("MUTATED AT: JUMP INSN");
             super.visitInsn(Opcodes.POP);
+//            this.mv.visitJumpInsn(opcode, label);
         } else {
-            System.out.println("!!!!!!!!!!!!START!!!!!!!!!!!!");
-            System.out.println("CAN MUTATE YIELDS FALSE");
+//            System.out.println("!!!!!!!!!!!!START!!!!!!!!!!!!");
+//            System.out.println("CAN MUTATE YIELDS FALSE");
             this.mv.visitJumpInsn(opcode, label);
         }
 
         SEEN_INVOKE_VIRTUAL = 0;
         SEEN_LDC = 0;
         SEEN_EQUALS = 0;
-        System.out.println("!!!!!!!!!!!!END!!!!!!!!!!!!");
+//        System.out.println("!!!!!!!!!!!!END!!!!!!!!!!!!");
     }
 
     private boolean canMutate(final int opcode) {

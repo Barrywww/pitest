@@ -247,6 +247,11 @@
             <version>1.4.17</version>
             <scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-analysis</artifactId>
+            <version>${asm.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
